@@ -65,7 +65,9 @@ section {
 }
 
 /* Spikes */
-
+/*  Mask created with
+    https://yqnn.github.io/svg-path-editor/
+*/
 .spikes {
   --spike-width: 90px;
   --spike-height: 15px;
@@ -83,6 +85,7 @@ section {
   height: var(--spike-height);
   background: var(--spike-color);
   /* NOTE: It is important to use preserveApsectRatio="none" on the svg itsself for this effect*/
+  /* In Chrome mask-image has to be prefixed still */
   -webkit-mask-image: url('assets/spike.svg');
   /* Mask image works like a background-image with repeate. If the mask size is different to the size of the parent then it will repeat to fill it */
   -webkit-mask-size: var(--spike-width) var(--spike-height);
@@ -101,5 +104,22 @@ section {
   transform: rotate(0.5turn);
 }
 
-/* Image mask clip path */
-/* In Chrome mask-image has to be prefixed still */
+/* Waves */
+/* 
+    Mask created with
+    https://css-generators.com/wavy-shapes/ 
+*/
+.waves {
+  background: linear-gradient(to right, #00f260, #0575e6);
+
+  --mask: radial-gradient(111.8px at 50% 150px, #000 99%, #0000 101%)
+      calc(50% - 100px) 0/200px 51% repeat-x,
+    radial-gradient(111.8px at 50% -100px, #0000 99%, #000 101%) 50% 50px/200px
+      calc(51% - 50px) repeat-x,
+    radial-gradient(111.8px at 50% calc(100% - 150px), #000 99%, #0000 101%)
+      calc(50% - 100px) 100%/200px 51% repeat-x,
+    radial-gradient(111.8px at 50% calc(100% + 100px), #0000 99%, #000 101%) 50%
+      calc(100% - 50px) / 200px calc(51% - 50px) repeat-x;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}
