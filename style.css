@@ -1,4 +1,6 @@
-*:after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -7,12 +9,17 @@ html {
   color-scheme: dark light;
 }
 
+:root {
+  --body-bg: hsl(0, 0%, 13%);
+}
+
 body {
   margin: 0;
   font-family: system-ui;
   font-size: 1.25rem;
   line-height: 1.5;
   margin: 0;
+  background-color: var(--body-bg);
 }
 
 .wrapper {
@@ -56,3 +63,43 @@ section {
   z-index: -1;
   transform: skewY(var(--skew-angle));
 }
+
+/* Spikes */
+
+.spikes {
+  --spike-width: 90px;
+  --spike-height: 15px;
+  --spike-color: var(--body-bg);
+  position: relative;
+  color: black;
+  background: linear-gradient(to right, #fdc830, #f37335);
+}
+
+.spikes::before,
+.spikes::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: var(--spike-height);
+  background: var(--spike-color);
+  /* NOTE: It is important to use preserveApsectRatio="none" on the svg itsself for this effect*/
+  -webkit-mask-image: url('assets/spike.svg');
+  /* Mask image works like a background-image with repeate. If the mask size is different to the size of the parent then it will repeat to fill it */
+  -webkit-mask-size: var(--spike-width) var(--spike-height);
+
+  mask-image: url('assets/spike.svg');
+  mask-size: var(--spike-width) var(--spike-height);
+}
+
+/* Stick to top / bottom */
+.spikes::before {
+  top: 0;
+}
+/* Note: It is possible to encounter sub-pixel rendering issues when zooming in or out with the browser because we've used a transform. We could make a seaparate SVG for the top and bottom pieces to avoid needing to rotate. */
+.spikes::after {
+  bottom: 0;
+  transform: rotate(0.5turn);
+}
+
+/* Image mask clip path */
+/* In Chrome mask-image has to be prefixed still */
