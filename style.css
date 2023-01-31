@@ -1,0 +1,58 @@
+*:after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Use a dark theme if possible */
+  color-scheme: dark light;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.wrapper {
+  max-width: 50rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.site-title {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.25rem;
+}
+
+section {
+  padding-block: 5rem;
+}
+
+/* Shapes */
+
+/* Two options to rotate the background but keep the text straight */
+/* 1. Rotate the background then unskew the content */
+/* 2. Use a pseudo element */
+.diagonal {
+  --skew-angle: -5deg;
+  --background: linear-gradient(45deg, #12c2e9, #c471ed, #f64f59);
+  position: relative;
+  /* Create a stacking context to avoid
+  the negative z-index from potentially dropping behind other elements */
+  isolation: isolate;
+}
+
+.diagonal::after {
+  content: '';
+  background: var(--background);
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: skewY(var(--skew-angle));
+}
